@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Implementazione</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://unpkg.com/tone"></script>
+    <script>
+      // server ambiente socket anche per i client
+      const socket = io();
+      // funzione tone js crea nota
+      function playNote(note) {
+        // un semplice synth
+        const synth = new Tone.Synth().toDestination();
+        // evento
+        synth.triggerAttackRelease(note, "8n");
+      }
+      // gestione venti, potenzialmente basta copiare questa funzione
+      // socket.on("evento da gestire", "parametri se necessari")
+      socket.on("triggerTone", (ctrlValue) => {
+        playNote(ctrlValue);
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Waiting for Max Client to Send event</h1>
+    <button>Start Engine!</button>
+  </body>
+</html>
